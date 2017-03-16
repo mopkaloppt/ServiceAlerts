@@ -1,5 +1,7 @@
 package com.transit;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.*;
 import java.security.*;
 //import javax.json.stream.JsonParser;
@@ -9,6 +11,15 @@ import java.security.*;
  * Created by maprangsuwanbubpa on 17-03-16.
  */
 public class ServiceAlerts  {
+//    @SerializedName("content")
+//    String content;
+//    @SerializedName("created_at")
+//    String createdAt;
+//    @SerializedName("planned_start_at")
+//    String plannedStartAt;
+//    @SerializedName("planned_end_at")
+//    String plannedEndAt;
+
     private String content;
     private String created_at;
     private String planned_start_at;
@@ -41,24 +52,24 @@ public class ServiceAlerts  {
         this.planned_end_at = endValue;
     }
 
-    public static byte[] addToByteBuffer(String content, String createAt, String plannedStartAt, String plannedEndAt) {
+    public static byte[] addToByteBuffer(String content, String createdAt) {
         byte[] bytesOfMessage = new byte[0];
 
         try {
             byte[] contentBytes = content.getBytes("UTF-8");
-            byte[] createAtBytes = createAt.getBytes("UTF-8");
-            byte[] plannedStartAtBytes = plannedStartAt.getBytes("UTF-8");
-            byte[] plannedEndAtBytes = plannedEndAt.getBytes("UTF-8");
+            byte[] createAtBytes = createdAt.getBytes("UTF-8");
+            //byte[] plannedStartAtBytes = plannedStartAt.getBytes("UTF-8");
+            //byte[] plannedEndAtBytes = plannedEndAt.getBytes("UTF-8");
 
-            bytesOfMessage = new byte[contentBytes.length + createAtBytes.length + plannedStartAtBytes.length + plannedEndAtBytes.length];
+            bytesOfMessage = new byte[contentBytes.length + createAtBytes.length];
             /*
               Copy each byte[] into one byte[] to be used for security hash
               Method signature: System.arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
             */
             System.arraycopy(contentBytes, 0, bytesOfMessage, 0, contentBytes.length);
             System.arraycopy(createAtBytes, 0,bytesOfMessage, contentBytes.length, createAtBytes.length);
-            System.arraycopy(plannedStartAtBytes, 0, bytesOfMessage, createAtBytes.length, plannedStartAtBytes.length);
-            System.arraycopy(plannedEndAtBytes, 0, bytesOfMessage, plannedStartAtBytes.length, plannedEndAtBytes.length);
+            //System.arraycopy(plannedStartAtBytes, 0, bytesOfMessage, createAtBytes.length, plannedStartAtBytes.length);
+            //System.arraycopy(plannedEndAtBytes, 0, bytesOfMessage, plannedStartAtBytes.length, plannedEndAtBytes.length);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
